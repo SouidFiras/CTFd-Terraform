@@ -1,0 +1,30 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+packages:
+  - git
+
+runcmd:
+  # Install Docker using official script (always works on Azure)
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
+
+  # Enable docker service
+  - systemctl enable docker
+  - systemctl start docker
+
+  # Add "firas" user to docker group
+  - usermod -aG docker firas || true
+
+  # Clone CTFd
+  - git clone https://github.com/CTFd/CTFd.git /opt/CTFd || true
+  - chmod -R 755 /opt/CTFd
+  - chown -R firas:firas /opt/CTFd
+  - cd /opt/CTFd
+  # Run CTFd using Docker
+  - apt-get install -y docker-compose-plugin
+  - sudo -u firas docker-compose up --build -d
+
+
+
