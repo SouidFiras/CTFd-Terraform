@@ -11,9 +11,7 @@
 location             = "switzerlandnorth"
 resource_group_name  = "ctfd-rg"
 #vm_admin_username    = "var.vm_admin_username"
-vm_admin_username    = "firas"
 #vm_admin_password    = "var.vm_admin_password"
-vm_admin_password    = "Securinets123."
 vm_size              = "Standard_B2s"
 vm_count             = 1
 challenge_port_range = "8000-8100"
