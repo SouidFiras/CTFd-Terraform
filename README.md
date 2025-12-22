@@ -82,7 +82,7 @@ This downloads the required providers and prepares Terraform.
 
 ---
 
-### 5. Configure Variables
+### 5. ⚠️ Configure Variables (IMPORTANT)
 
 All required variables are located in:
 
@@ -90,11 +90,21 @@ All required variables are located in:
 terraform.tfvars
 ```
 
-You **must edit this file** and set the following required values:
+**⚠️ IMPORTANT: Before editing `terraform.tfvars`, review `variables.tf` carefully!**
+
+The available **VM sizes** and **Azure regions** in `variables.tf` depend on what is available in **your Azure subscription**. Not all regions or VM sizes may be available to your account. Check your Azure Portal to verify:
+
+* Available regions in your subscription
+* Available VM SKUs in those regions
+* Quota limits on your account
+
+If you try to use an unavailable resource, deployment will fail.
+
+You **must edit `terraform.tfvars`** and set the following required values:
 
 * `vm_admin_username`: Admin username for the VM (e.g., `azureuser`, `ctfdadmin`)
 * `vm_admin_password`: Admin password (must meet Azure complexity requirements)
-* `location`: Azure region (e.g., `switzerlandnorth`, `francecentral`)
+* `location`: Azure region **available in your subscription** (e.g., `switzerlandnorth`, `francecentral`)
 * `resource_group_name`: Name for your resource group (e.g., `ctfd-rg`)
 
 Example:
@@ -111,11 +121,11 @@ challenge_port_range = "8000-8100"
 
 You can also customize optional variables:
 
-* `vm_size`: VM instance type (default: `Standard_B2s`)
+* `vm_size`: VM instance type (default: `Standard_B2s`) - **Must exist in your region**
 * `vm_count`: Number of VMs to create (default: `1`)
 * `challenge_port_range`: Port range for CTF challenges (default: `8000-8100`)
 
-See `variables.tf` for all available options.
+See `variables.tf` for all available options defined for your account.
 
 ---
 
